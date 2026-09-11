@@ -1,0 +1,700 @@
+/* ==========================================================================
+   TOKENS & RESET
+   ========================================================================== */
+:root {
+    --bg: #141414;
+    --surface: #1e1e1e;
+    --surface-2: #262626;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --text: #ffffff;
+    --text-2: #a3a3a3;
+    --text-3: #6b6b6b;
+
+    --yellow: #f7d046;
+
+    --radius-sm: 6px;
+
+    --font: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --container: 1080px;
+    --gutter: 24px;
+
+    --shot-h: 400px;
+    --shot-gap: 16px;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: 100%;
+    max-width: calc(var(--container) + var(--gutter) * 2);
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+}
+
+/* ==========================================================================
+   STICKERS & TITLE ICONS
+   ========================================================================== */
+.has-sticker,
+.has-icon {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+}
+
+/* Sticker images are exported at 4x; widths match the design */
+.sticker {
+    position: absolute;
+    left: 100%;
+    pointer-events: none;
+}
+
+/* Arrow tip of each sticker touches the last letter */
+/* Widths keep the sticker-to-text ratio of the reference design */
+.sticker--product {
+    width: 2.2em;
+    top: 0.36em;
+    margin-left: -0.35em;
+}
+
+.sticker--experience {
+    width: 3.6em;
+    top: 0.01em;
+    margin-left: -0.55em;
+}
+
+.sticker--selected {
+    width: 4.1em;
+    top: 0.2em;
+    margin-left: -0.38em;
+}
+
+/* Icons sit in front of the first letter of the second line */
+.title-icon {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.title-icon--climber {
+    width: 1.3em;
+    left: -0.7em;
+    top: -0.48em;
+}
+
+.title-icon--pen {
+    width: 1.3em;
+    left: -0.68em;
+    top: 0.18em;
+}
+
+/* ==========================================================================
+   TOP BAR
+   ========================================================================== */
+.topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+.topbar__mail:hover {
+    color: var(--text);
+}
+
+.topbar__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-3);
+}
+
+.social-links a {
+    color: var(--text-2);
+}
+
+.social-links a:hover {
+    color: var(--text);
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+    padding-top: 110px;
+    padding-bottom: 60px;
+    text-align: center;
+}
+
+.hero__hello {
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 18px;
+}
+
+.hero__title {
+    font-size: clamp(34px, 5vw, 64px);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin-bottom: 220px;
+}
+
+.hero__line {
+    display: block;
+    isolation: isolate;
+}
+
+.hero__emoji {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    width: 0.85em;
+    height: auto;
+    margin-right: -0.28em;
+    vertical-align: 0.02em;
+}
+
+.dot-yellow {
+    color: var(--yellow);
+}
+
+/* Hero gallery: two marquee rows ------------------------------------------ */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--shot-gap);
+}
+
+.marquee {
+    overflow: hidden;
+}
+
+.marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 70s linear infinite;
+}
+
+.marquee--reverse .marquee__track {
+    animation-direction: reverse;
+    animation-duration: 80s;
+}
+
+.marquee:hover .marquee__track {
+    animation-play-state: paused;
+}
+
+.marquee__group {
+    display: flex;
+    gap: var(--shot-gap);
+    padding-right: var(--shot-gap);
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+    .marquee { overflow-x: auto; }
+}
+
+.shot {
+    flex: none;
+    height: var(--shot-h);
+    aspect-ratio: 558 / 1212;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.shot--wide {
+    aspect-ratio: 1617 / 1212;
+}
+
+.shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   SECTIONS
+   ========================================================================== */
+.section {
+    padding-top: 110px;
+    padding-bottom: 20px;
+}
+
+.section-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: clamp(32px, 3.4vw, 44px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin-bottom: 72px;
+}
+
+/* ==========================================================================
+   JOURNEY / TIMELINE
+   ========================================================================== */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 110px;
+}
+
+.timeline__item {
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 24px;
+}
+
+.timeline__date {
+    font-size: 15px;
+    color: var(--text-2);
+}
+
+.timeline__body {
+    max-width: 640px;
+}
+
+.timeline__role {
+    font-size: 15px;
+    color: var(--text-2);
+    margin-bottom: 10px;
+}
+
+.timeline__company {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.timeline__desc {
+    font-size: 15px;
+    color: var(--text-2);
+    line-height: 1.75;
+    margin-bottom: 28px;
+}
+
+.timeline__links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.timeline__links a {
+    font-size: 15px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+}
+
+.timeline__links a:hover {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   WORKS
+   ========================================================================== */
+.works {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px 20px;
+}
+
+.work {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.work__media {
+    aspect-ratio: 1590 / 1272;
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.work__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.work:hover .work__media img {
+    transform: scale(1.03);
+}
+
+.work__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 0;
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+.work__meta strong {
+    font-weight: 400;
+    color: var(--text);
+}
+
+.work__meta > * + *::before {
+    content: '·';
+    margin: 0 10px;
+    color: var(--text-3);
+}
+
+/* ==========================================================================
+   CONTACT
+   ========================================================================== */
+.contact {
+    padding-top: 180px;
+    padding-bottom: 160px;
+}
+
+.contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.contact__emoji {
+    position: relative;
+    width: 90px;
+    margin-top: 70px;
+    margin-left: 20px;
+}
+
+/* Face swap: the faces cross-fade while the whole emoji squashes and stretches,
+   so it reads as one face changing expression. Two keyframe names let the
+   squash replay on both hover-in and hover-out. */
+.contact__emoji {
+    transform-origin: 50% 90%;
+    animation: emoji-to-sad 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.contact__emoji img {
+    width: 100%;
+    transition: opacity 0.28s ease 0.08s, filter 0.28s ease 0.08s;
+}
+
+/* Happy face sits on top, hidden until a contact button is hovered */
+.contact__emoji-happy {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    filter: blur(2px);
+}
+
+.contact:has(.icon-btn:hover, .icon-btn:focus-visible) .contact__emoji {
+    animation: emoji-to-happy 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+    transform: scale(1.06);
+}
+
+.contact:has(.icon-btn:hover, .icon-btn:focus-visible) .contact__emoji-sad {
+    opacity: 0;
+    filter: blur(2px);
+}
+
+.contact:has(.icon-btn:hover, .icon-btn:focus-visible) .contact__emoji-happy {
+    opacity: 1;
+    filter: blur(0);
+}
+
+@keyframes emoji-to-happy {
+    0%   { transform: scale(1, 1) rotate(0); }
+    30%  { transform: scale(1.1, 0.88) rotate(-4deg); }
+    60%  { transform: scale(0.96, 1.1) rotate(3deg); }
+    100% { transform: scale(1.06) rotate(0); }
+}
+
+@keyframes emoji-to-sad {
+    0%   { transform: scale(1.06) rotate(0); }
+    35%  { transform: scale(1.04, 0.9) rotate(3deg); }
+    70%  { transform: scale(0.98, 1.03) rotate(-1deg); }
+    100% { transform: scale(1, 1) rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact__emoji,
+    .contact:has(.icon-btn:hover, .icon-btn:focus-visible) .contact__emoji {
+        animation: none;
+    }
+}
+
+.contact__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+.contact__bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text);
+}
+
+.contact__text {
+    font-size: 15px;
+    color: var(--text-2);
+    line-height: 1.75;
+    margin-bottom: 64px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.author__avatar {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author__info {
+    flex: 1;
+}
+
+.author__name {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.author__role {
+    font-size: 14px;
+    color: var(--text-2);
+}
+
+.author__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    display: block;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.icon-btn:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+.icon-btn img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================================================
+   CUSTOM CURSOR (enabled by JS on mouse/trackpad devices only)
+   ========================================================================== */
+.custom-cursor [data-cursor].is-cursor-active,
+.custom-cursor [data-cursor].is-cursor-active * {
+    cursor: none;
+}
+
+/* Title sticker while it is out acting as the cursor */
+.sticker.is-away {
+    visibility: hidden;
+}
+
+/* Copy of the sticker that travels between its place and the pointer */
+.sticker-flyer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    max-width: none;
+    pointer-events: none;
+    visibility: hidden;
+    will-change: transform;
+}
+
+.sticker-flyer.is-visible {
+    visibility: visible;
+}
+
+/* ==========================================================================
+   TITLE GLOW (glowing copy of each line, added by JS)
+   ========================================================================== */
+.hero__line,
+.section-title > span {
+    position: relative;
+}
+
+.title-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    color: #fff;
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.9),
+        0 0 22px rgba(255, 255, 255, 0.55),
+        0 0 44px rgba(160, 215, 255, 0.35);
+    -webkit-mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
+    mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.is-glowing .title-glow {
+    opacity: 1;
+}
+
+/* Keep the emoji's space in the copy, but only the real one is visible */
+.title-glow .hero__emoji {
+    visibility: hidden;
+}
+
+/* ==========================================================================
+   SNOW (canvas added by JS)
+   ========================================================================== */
+.snow {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 36px;
+    font-size: 13px;
+    color: var(--text-3);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1024px) {
+    :root { --shot-h: 340px; }
+
+    .hero__title { margin-bottom: 140px; }
+
+    .timeline__item { grid-template-columns: 260px 1fr; }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --gutter: 20px;
+        --shot-h: 300px;
+        --shot-gap: 12px;
+    }
+
+    .topbar__inner { height: 80px; }
+
+    .hero { padding-top: 70px; }
+    .hero__title { margin-bottom: 90px; }
+
+    .section { padding-top: 80px; }
+    .section-title { margin-bottom: 48px; }
+
+    .timeline { gap: 64px; }
+    .timeline__item { grid-template-columns: 1fr; gap: 12px; }
+
+    .works { grid-template-columns: 1fr; gap: 40px; }
+
+    .contact { padding-top: 100px; padding-bottom: 80px; }
+    .contact__grid { grid-template-columns: 1fr; gap: 32px; }
+    .contact__emoji { margin: 0; width: 72px; }
+    .contact__text { margin-bottom: 40px; }
+}
+
+@media (max-width: 480px) {
+    :root { --shot-h: 260px; }
+
+    .topbar__mail span:last-child { display: none; }
+
+    .hero__title { font-size: 30px; }
+
+    .work__meta strong { flex-basis: 100%; }
+    .work__meta strong + span::before { content: none; }
+
+    .footer__inner {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
