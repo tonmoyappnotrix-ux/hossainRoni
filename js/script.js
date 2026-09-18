@@ -164,20 +164,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Light snowfall over the whole page
+    // Light snowfall inside the hero section only
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = document.querySelector('.hero');
 
-    if (!reduceMotion) {
+    if (!reduceMotion && hero) {
         const canvas = document.createElement('canvas');
         canvas.className = 'snow';
         canvas.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(canvas);
+        hero.prepend(canvas);
 
         const ctx = canvas.getContext('2d');
         let width = 0;
         let height = 0;
         let flakes = [];
-        let running = true;
+        let frame = 0;
 
         const makeFlake = (startAtTop = false) => ({
             x: Math.random() * width,
@@ -191,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const resize = () => {
             const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            width = window.innerWidth;
-            height = window.innerHeight;
+            width = hero.clientWidth;
+            height = hero.clientHeight;
             canvas.width = width * dpr;
             canvas.height = height * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -202,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const draw = () => {
-            if (!running) return;
             ctx.clearRect(0, 0, width, height);
 
             flakes.forEach((f, i) => {
@@ -221,16 +221,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fill();
             });
 
-            requestAnimationFrame(draw);
+            frame = requestAnimationFrame(draw);
         };
 
+        // Only ever one loop running: cancel any pending frame before (re)starting
+        const start = () => {
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(draw);
+        };
+
+        const stop = () => cancelAnimationFrame(frame);
+        let heroVisible = true;
+
         resize();
-        window.addEventListener('resize', resize);
+        new ResizeObserver(resize).observe(hero);
+
+        // Pause while the hero is scrolled out of view or the tab is hidden
+        new IntersectionObserver(([entry]) => {
+            heroVisible = entry.isIntersecting;
+            heroVisible && !document.hidden ? start() : stop();
+        }).observe(hero);
+
         document.addEventListener('visibilitychange', () => {
-            running = !document.hidden;
-            if (running) requestAnimationFrame(draw);
+            heroVisible && !document.hidden ? start() : stop();
         });
-        requestAnimationFrame(draw);
     }
 
     // Footer year
