@@ -21,6 +21,9 @@
 
     --shot-h: 400px;
     --shot-gap: 16px;
+
+    --marquee-duration: 110s;
+    --marquee-duration-alt: 125s;
 }
 
 *,
@@ -293,12 +296,15 @@ ul {
 .marquee__track {
     display: flex;
     width: max-content;
-    animation: marquee 70s linear infinite;
+    /* Promoted to its own layer so the scroll stays smooth on weaker GPUs */
+    will-change: transform;
+    backface-visibility: hidden;
+    animation: marquee var(--marquee-duration) linear infinite;
 }
 
 .marquee--reverse .marquee__track {
     animation-direction: reverse;
-    animation-duration: 80s;
+    animation-duration: var(--marquee-duration-alt);
 }
 
 .marquee:hover .marquee__track {
@@ -312,8 +318,8 @@ ul {
 }
 
 @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -745,6 +751,9 @@ ul {
         --gutter: 20px;
         --shot-h: 300px;
         --shot-gap: 12px;
+
+        --marquee-duration: 150s;
+        --marquee-duration-alt: 170s;
     }
 
     .topbar__inner { height: 80px; }
@@ -769,7 +778,12 @@ ul {
 }
 
 @media (max-width: 480px) {
-    :root { --shot-h: 260px; }
+    :root {
+        --shot-h: 260px;
+
+        --marquee-duration: 175s;
+        --marquee-duration-alt: 195s;
+    }
 
     .topbar__mail span:last-child { display: none; }
 
