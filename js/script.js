@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             speed: 0.3 + Math.random() * 0.7,          // fall px/frame
             drift: Math.random() * Math.PI * 2,        // sway phase
             sway: 0.2 + Math.random() * 0.5,           // sway amount
-            alpha: 0.25 + Math.random() * 0.5
+            alpha: 0.7 + Math.random() * 0.3
         });
 
         const resize = () => {
