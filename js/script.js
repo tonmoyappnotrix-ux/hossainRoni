@@ -134,36 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.addEventListener('mouseleave', () => update(null));
     }
 
-    // Title glow: letters near the pointer light up. Each line gets a glowing copy
-    // laid over it, masked to a soft circle that follows the pointer.
-    if (finePointer) {
-        document.querySelectorAll('.hero__title, .section-title').forEach(title => {
-            const lines = [...title.querySelectorAll(':scope > span')];
-
-            const glows = lines.map(line => {
-                const glow = document.createElement('span');
-                glow.className = 'title-glow';
-                glow.setAttribute('aria-hidden', 'true');
-                glow.append(...line.cloneNode(true).childNodes);
-                // Absolutely positioned decorations don't affect layout, so drop them
-                glow.querySelectorAll('.sticker, .title-icon').forEach(el => el.remove());
-                line.appendChild(glow);
-                return { line, glow };
-            });
-
-            title.addEventListener('mousemove', e => {
-                glows.forEach(({ line, glow }) => {
-                    const rect = line.getBoundingClientRect();
-                    glow.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-                    glow.style.setProperty('--my', `${e.clientY - rect.top}px`);
-                });
-                title.classList.add('is-glowing');
-            });
-
-            title.addEventListener('mouseleave', () => title.classList.remove('is-glowing'));
-        });
-    }
-
     // Light snowfall inside the hero section only
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hero = document.querySelector('.hero');

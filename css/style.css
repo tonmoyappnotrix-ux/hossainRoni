@@ -11,7 +11,7 @@
     --text-2: #a3a3a3;
     --text-3: #6b6b6b;
 
-    --yellow: #f7d046;
+    --accent: #EAFF6F;
 
     --radius-sm: 6px;
 
@@ -178,7 +178,7 @@ ul {
 }
 
 .social-links a {
-    color: #DDDDDD;
+    color: #818181;
 }
 
 .social-links a:hover,
@@ -276,7 +276,7 @@ ul {
 }
 
 .dot-yellow {
-    color: var(--yellow);
+    color: var(--accent);
 }
 
 /* Hero gallery: two marquee rows ------------------------------------------ */
@@ -476,8 +476,23 @@ ul {
    CONTACT
    ========================================================================== */
 .contact {
-    padding-top: 180px;
-    padding-bottom: 160px;
+    position: relative;
+    margin-top: 128px;
+    padding-top: 104px;
+    padding-bottom: 94px;
+}
+
+/* Rule sits at the content width, like the topbar and footer ones */
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - var(--gutter) * 2);
+    max-width: var(--container);
+    height: 1px;
+    background: var(--border);
 }
 
 .contact__grid {
@@ -563,7 +578,7 @@ ul {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--text);
+    background: var(--accent);
 }
 
 .contact__text {
@@ -607,6 +622,7 @@ ul {
 }
 
 .icon-btn {
+    position: relative;
     display: block;
     width: 44px;
     height: 44px;
@@ -622,13 +638,24 @@ ul {
 .icon-btn img {
     width: 100%;
     height: 100%;
-    transition: filter 0.2s ease;
+    transition: opacity 0.25s ease;
 }
 
-/* Icons ship in grey; hover pushes them to pure white */
-.icon-btn:hover img,
-.icon-btn:focus-visible img {
-    filter: brightness(0) invert(1);
+/* Hover cross-fades to the active artwork instead of recolouring the PNG */
+.icon-btn__on {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}
+
+.icon-btn:hover .icon-btn__on,
+.icon-btn:focus-visible .icon-btn__on {
+    opacity: 1;
+}
+
+.icon-btn:hover .icon-btn__off,
+.icon-btn:focus-visible .icon-btn__off {
+    opacity: 0;
 }
 
 /* ==========================================================================
@@ -661,39 +688,6 @@ ul {
 }
 
 /* ==========================================================================
-   TITLE GLOW (glowing copy of each line, added by JS)
-   ========================================================================== */
-.hero__line,
-.section-title > span {
-    position: relative;
-}
-
-.title-glow {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    color: #fff;
-    text-shadow:
-        0 0 8px rgba(255, 255, 255, 0.9),
-        0 0 22px rgba(255, 255, 255, 0.55),
-        0 0 44px rgba(160, 215, 255, 0.35);
-    -webkit-mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
-    mask-image: radial-gradient(circle 110px at var(--mx, -999px) var(--my, -999px), #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.is-glowing .title-glow {
-    opacity: 1;
-}
-
-/* Keep the emoji's space in the copy, but only the real one is visible */
-.title-glow .hero__emoji {
-    visibility: hidden;
-}
-
-/* ==========================================================================
    SNOW (canvas added by JS)
    ========================================================================== */
 .snow {
@@ -701,8 +695,14 @@ ul {
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 5;
+    z-index: 0;
     pointer-events: none;
+}
+
+/* Hero content stacks above the snowfall */
+.hero > .container {
+    position: relative;
+    z-index: 1;
 }
 
 /* ==========================================================================
@@ -713,7 +713,8 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 36px;
+    padding-top: 52px;
+    padding-bottom: 38px;
     font-size: 13px;
     color: var(--text-3);
 }
@@ -760,7 +761,8 @@ ul {
 
     .works { grid-template-columns: 1fr; gap: 40px; }
 
-    .contact { padding-top: 100px; padding-bottom: 80px; }
+    .contact { margin-top: 72px; padding-top: 64px; padding-bottom: 56px; }
+    .footer__inner { padding-top: 36px; padding-bottom: 28px; }
     .contact__grid { grid-template-columns: 1fr; gap: 32px; }
     .contact__emoji { margin: 0; width: 72px; }
     .contact__text { margin-bottom: 40px; }
