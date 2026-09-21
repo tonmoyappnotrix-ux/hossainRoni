@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const makeFlake = (startAtTop = false) => ({
             x: Math.random() * width,
             y: startAtTop ? -10 : Math.random() * height,
-            r: 0.8 + Math.random() * 1.8,              // radius px
+            r: 0.7 + Math.random() * 0.4,              // radius px
             speed: 0.3 + Math.random() * 0.7,          // fall px/frame
             drift: Math.random() * Math.PI * 2,        // sway phase
             sway: 0.2 + Math.random() * 0.5,           // sway amount
