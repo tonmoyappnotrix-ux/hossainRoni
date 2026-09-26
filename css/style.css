@@ -503,7 +503,7 @@ ul {
 
 .contact__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 630px);
     gap: 20px;
     align-items: start;
 }
@@ -575,9 +575,10 @@ ul {
 .contact__label {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 21px;
-    margin-bottom: 18px;
+    gap: 10px;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 24px;
 }
 
 .contact__bullet {
@@ -588,22 +589,22 @@ ul {
 }
 
 .contact__text {
-    font-size: 18px;
+    font-size: 23px;
     color: var(--text-2);
-    line-height: 1.75;
+    line-height: 1.45;
     margin-bottom: 64px;
 }
 
 .author {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 }
 
 .author__avatar {
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -613,25 +614,26 @@ ul {
 }
 
 .author__name {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 4px;
 }
 
 .author__role {
-    font-size: 17px;
+    font-size: 19px;
     color: var(--text-2);
 }
 
 .author__actions {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
 .icon-btn {
     position: relative;
     display: block;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     transition: transform 0.2s ease;
 }
